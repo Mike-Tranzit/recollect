@@ -15,9 +15,9 @@ export class MainComponent implements OnInit, OnDestroy {
   private subscribeData: Subscription;
   private pageTitle = 'Таймслоты на терминале';
   public statusTitle: any = {
-    '=1': 'На терминале',
-    '=2': 'Ушел с терминала',
-    '=3': 'На территории',
+    '=1': 'На НАТ',
+    '=2': 'Ушел с НАТ',
+    '=3': 'На НЗТ',
     '=4': 'Разгружен',
     'other': 'Не понятно',
   };
@@ -37,7 +37,8 @@ export class MainComponent implements OnInit, OnDestroy {
     );
   }
 
-  delete(): void {
+  delete(ids:number): void {
+    this.dataService.delete();
   }
 
   ngOnInit() {

@@ -1,15 +1,24 @@
 .comment {
-    width: 15%;
+    width: 14%;
 }
 input.form-control {
     width: 65%;
     float: left;
 }
+button:hover{
+    cursor: pointer;
+}
+.status {
+    width:7%;
+}
+.delete {
+    width: 5%;
+}
 .date{
     width: 10%;
 }
 button.form-control {
-    width: 20%;
+    width: 10%;
     float: right;
 }
 #title {

@@ -1,7 +1,3 @@
-
-
-
-
 <div class="row" *ngIf="!data.length">
     <div class="col-centered">
         <img src="/images/loader.gif" alt="Идет загрузка..." >
@@ -14,27 +10,29 @@
         <thead>
         <tr>
             <th>Статус</th>
+            <th>$$$</th>
             <th>Номер</th>
             <th>Телефон</th>
-            <th>Время</th>
-            <th>Дата добавления</th>
+            <th>Добавлен</th>
+            <th>№</th>
             <th>Комментарии</th>
             <th>Осн. комментарии</th>
-            <th>Оставить комментарий</th>
+            <th>Комментарий</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let item of data">
-            <td>{{item.status | i18nPlural:statusTitle}}</td>
+            <td class="status">{{item.status | i18nPlural:statusTitle}}</td>
+            <td>{{item.balance}}</td>
             <td>{{item.plate}}</td>
             <td>{{item.phone}}</td>
-            <td class="date">{{item.date | date:'dd-MM-yyyy hh:mm'}}</td>
-            <td class="date">{{item.date_create | date:'dd-MM-yyyy hh:mm'}}</td>
+            <td class="date">{{item.date_create | date:'dd-MM-yyyy'}}</td>
+            <td>{{item.deviceId}}</td>
             <td class="comment">{{item.comment}}</td>
             <td class="comment">{{item.main_comment}}</td>
             <td><input type="text" class="form-control">&nbsp;<button type="button" class="btn btn-success">Ok</button></td>
-            <td><button type="button" class="btn btn-primary" (click)="delete()">Удалить</button></td>
+            <td class="delete"><button type="button" class="btn btn-primary" (click)="delete(item.ids)">Удалить</button></td>
         </tr>
         </tbody>
     </table>

@@ -14,6 +14,9 @@ export class DataService {
       this.host = environment.host;
   }
 
+   delete(id:number,path = 'glonass.data.delete.php'){
+       return this.http.delete(this.host + path).map( data => data.text() ? data.json() : data );
+   }
   get(path = 'glonass.data.php'): Observable<Glonass[]> {
       return this.http.get(this.host + path).map( data => data.text() ? data.json() : data );
   }
