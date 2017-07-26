@@ -38,7 +38,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   delete(ids:number): void {
-    this.dataService.delete();
+    this.dataService.delete(ids);
   }
 
   ngOnInit() {
