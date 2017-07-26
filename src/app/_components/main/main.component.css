@@ -1,0 +1,21 @@
+.comment {
+    width: 15%;
+}
+input.form-control {
+    width: 65%;
+    float: left;
+}
+.date{
+    width: 10%;
+}
+button.form-control {
+    width: 20%;
+    float: right;
+}
+#title {
+    text-align: center;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}

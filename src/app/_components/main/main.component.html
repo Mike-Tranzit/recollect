@@ -1,0 +1,41 @@
+
+
+
+
+<div class="row" *ngIf="!data.length">
+    <div class="col-centered">
+        <img src="/images/loader.gif" alt="Идет загрузка..." >
+    </div>
+</div>
+
+<div class="table-responsive" *ngIf="data.length">
+    <h2 id="title">{{pageTitle}}</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Статус</th>
+            <th>Номер</th>
+            <th>Телефон</th>
+            <th>Время</th>
+            <th>Дата добавления</th>
+            <th>Комментарии</th>
+            <th>Осн. комментарии</th>
+            <th>Оставить комментарий</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of data">
+            <td>{{item.status | i18nPlural:statusTitle}}</td>
+            <td>{{item.plate}}</td>
+            <td>{{item.phone}}</td>
+            <td class="date">{{item.date | date:'dd-MM-yyyy hh:mm'}}</td>
+            <td class="date">{{item.date_create | date:'dd-MM-yyyy hh:mm'}}</td>
+            <td class="comment">{{item.comment}}</td>
+            <td class="comment">{{item.main_comment}}</td>
+            <td><input type="text" class="form-control">&nbsp;<button type="button" class="btn btn-success">Ok</button></td>
+            <td><button type="button" class="btn btn-primary" (click)="delete()">Удалить</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
