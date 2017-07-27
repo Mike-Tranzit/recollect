@@ -12,7 +12,7 @@ while ($info = mysqli_fetch_array($res)){
     $result = mysqli_query($link,"SELECT * from glonass.comment where num_auto='" . $info["num_auto"] . "'");
     $comment = "";
     while ($dd = mysqli_fetch_array($result)) {
-        $comment .= "" . $dd["dates"] . " " . $dd["comment"] . "";
+        $comment .= "" . $dd["dates"] . " " . $dd["comment"] . " ";
     }
 
     $rr = 0;
@@ -23,11 +23,14 @@ while ($info = mysqli_fetch_array($res)){
     }
     if( trim(strlen($rr)) == 0) $rr = 0;
 
+    $relation = ($inf["device_id"]!=0 && $inf['date_last_coordinate'] && strtotime($inf['date_last_coordinate']) > (time() - 60*60))?1:2;
+
     array_push($data,array(
         'ids'=>$info['ids'],
         'status'=>$info["status_m"],
         'plate'=>$info["num_auto"],
         'balance'=>$rr,
+        'relation'=>$relation,
         'phone'=>$inf["tel"] . " " . $inf["tel1"],
         'deviceId'=>$inf["device_id"],
         'date_create'=>$info["dates"],

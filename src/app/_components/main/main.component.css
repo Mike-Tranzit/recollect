@@ -5,6 +5,9 @@ input.form-control {
     width: 65%;
     float: left;
 }
+.error {
+    text-align: center;
+}
 button:hover{
     cursor: pointer;
 }
