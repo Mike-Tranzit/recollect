@@ -8,6 +8,19 @@ input.form-control {
 .error {
     text-align: center;
 }
+.table-from-nat{
+    background-color: #E4E4E4;
+}
+.table-to {
+    background-color: #BFECFF;
+}
+
+input.ng-touched.ng-invalid {border:solid red 1px;}
+input.ng-touched.ng-valid {border:solid green 1px !important;}
+.coordinateSuccess {
+    background-color: #B7F2B4 !important;
+    font-weight: 600;
+}
 button:hover{
     cursor: pointer;
 }
@@ -24,7 +37,7 @@ button.form-control {
     width: 10%;
     float: right;
 }
-#title {
+.title {
     text-align: center;
 }
 .col-centered{

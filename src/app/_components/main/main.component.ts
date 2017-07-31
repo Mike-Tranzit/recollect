@@ -12,14 +12,12 @@ import { Subscription } from 'rxjs/Subscription';
 export class MainComponent implements OnInit, OnDestroy {
 
   private data: Glonass[] = [];
+  private timeslotsData: Glonass[] = [];
+
   private subscribeData: Subscription;
+  private subscribeDataTimeslots: Subscription;
   private subscribeDelete: Subscription;
   public countStartData: number = null;
-  public pageTitle = 'Таймслоты на терминале';
-  public relationTitle: any = {
-    '=1': 'Да',
-    '=2': 'Нет'
-  };
   public statusTitle: any = {
   '=1': 'На НАТ',
   '=2': 'Ушел с НАТ',
@@ -32,9 +30,26 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(private dataService: DataService) {
     this.subscribeData = dataService.get().subscribe(
         (response: Glonass[]) => {
-          console.log(response);
+         // console.log(response);
           this.data = response;
           this.countStartData = this.data.length;
+          this.timeslots();
+        },
+        (err: any) => {
+          console.log('Received error:', err);
+        },
+        () => {
+          console.log('Empty');
+        }
+    );
+  }
+
+  timeslots(): void {
+    this.subscribeDataTimeslots = this.dataService.get('glonass.data.timeslots.php').subscribe(
+        (response: Glonass[]) => {
+         // console.log(response);
+          this.timeslotsData = response;
+         // this.countStartData = this.data.length;
         },
         (err: any) => {
           console.log('Received error:', err);
@@ -48,7 +63,7 @@ export class MainComponent implements OnInit, OnDestroy {
   delete(item: Glonass): void {
 
     this.subscribeDelete = this.dataService.delete(item.ids).subscribe( res => {
-      console.log( res );
+
       if (res.status === 'true') {
         const index = this.data.indexOf( item );
         if ( index > -1) {
@@ -61,6 +76,15 @@ export class MainComponent implements OnInit, OnDestroy {
     },
     error => this.errorMessage = error
     );
+  }
+
+  addComment(item: Glonass, text: string): void {
+    this.dataService.updateComment(item.plate, text).subscribe( res => {
+
+      if (res.status === 'true') {
+        item.comment += ' \n' + text;
+      }
+    } );
   }
 
   ngOnInit() {
