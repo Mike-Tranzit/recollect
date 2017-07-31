@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 include 'db.php';
 
 mysqli_select_db($link,"glonass");
-$res = mysqli_query($link,"SELECT *,`reminder_glonass_porttranzit`.id as ids FROM glonass.`reminder_glonass_porttranzit` LEFT JOIN cms.autos on cms.autos.num_auto = reminder_glonass_porttranzit.num_auto where windows > now() and prov is not null order by windows");
+$res = mysqli_query($link,"SELECT *,`reminder_glonass_porttranzit`.id as ids FROM glonass.`reminder_glonass_porttranzit` LEFT JOIN cms.autos on cms.autos.num_auto = reminder_glonass_porttranzit.num_auto where date(windows) = curdate() and prov is not null order by windows");
 
 $data = array();
 while ($info = mysqli_fetch_array($res)){

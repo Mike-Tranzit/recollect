@@ -95,5 +95,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscribeData.unsubscribe();
     this.subscribeDelete.unsubscribe();
   }
-
+  /*
+  * 1 - очистка инпут после добавления комментария
+  * 2 - вывод оплат
+  * 3 - api trello c confirm переход/не переход.
+  * */
 }
