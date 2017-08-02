@@ -5,6 +5,8 @@
     </div>
 </div>
 
+
+
 <div class="table-responsive" *ngIf="data.length">
     <h2 class="title">На терминале</h2>
     <table class="table table-hover table-bordered">
@@ -26,7 +28,7 @@
         <tr *ngFor="let item of data" [ngClass]="{'table-from-nat':item.status == '2','table-to':item.status == '3'}">
             <td [ngClass]="{status: true}">{{item.status | i18nPlural:statusTitle}}</td>
             <td>{{item.balance}}</td>
-            <td>{{item.plate}}</td>
+            <td>{{item.plate}} <a href="#" (click)="trelloConfirm(item);"><img src="assets/images/trello.png" width="16px" alt="Занести в Trello"></a></td>
             <td>{{item.phone}}</td>
             <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM-yyyy'}}</td>
             <td [ngClass]="{coordinateSuccess : item.relation == 1}">{{item.deviceId}}</td>

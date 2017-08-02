@@ -7,6 +7,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { MainComponent } from './_components/main/main.component';
 import { DataService } from './_services/data.service';
+import { PopupModule } from 'ng2-opd-popup';
+import { ModalModule } from 'angular2-modal';
 
 const routes: Routes = [
  /* {
@@ -22,14 +24,17 @@ const routes: Routes = [
     MainComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
     BrowserModule,
+    ModalModule.forRoot(),
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(routes)
+   // PopupModule.forRoot()
   ],
   providers: [DataService],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }
