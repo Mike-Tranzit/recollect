@@ -3,7 +3,6 @@
     <extensionMap>
       <mapping pattern="package" type="JSON" />
       <mapping pattern="readme" type="PLAIN_TEXT" />
-      <mapping ext="ejs" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
