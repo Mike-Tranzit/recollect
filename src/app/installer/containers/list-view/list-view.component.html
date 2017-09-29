@@ -1,0 +1,98 @@
+<app-loader [active]="active"></app-loader>
+
+<app-modal #modal>
+    <div class="app-modal-header">
+
+    </div>
+    <div class="app-modal-body">
+        <h4><strong>Закрыть задачу?</strong></h4>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-success" (click)="onTouch()">Да</button>
+        <button type="button" class="btn btn-default" (click)="modal.hide()">Отмена</button>
+    </div>
+</app-modal>
+
+
+<div id="content" *ngIf="data">
+    <br>
+<form>
+    <h4 class="plate">{{data.plate}}</h4>
+
+    <table class="input-action">
+        <tr>
+            <td>
+                <h5 [ngClass]="{greenCopy:phoneCopy}">+7 ({{data.phone | slice:0:3}}) {{data.phone | slice:3:5}}-{{data.phone | slice:5:7}}-{{ data.phone | slice:7:10}}</h5>
+            </td>
+            <td>
+                <a href="#" (click)="copy($event)" id="copy"><img src="assets/images/edit.png" class="copy"  alt="Скопировать"></a>
+            </td>
+        </tr>
+    </table>
+    <h6 class="status" *ngIf="data.status == 1">Задача закрыта!</h6>
+
+    <div class="form-group">
+        <label for="act">Номер акта:</label>
+
+        <h5 *ngIf="data.act.length" class="green">{{data.act}}</h5>
+
+        <div *ngIf="!data.act.length" class="input-action">
+            <table>
+                <tr>
+                    <td>
+                        <input name="act" type="text" #act="ngModel" [(ngModel)]="act.value" required class="form-control" id="act">
+                    </td>
+                    <td>
+                        <button (click)="addAct(act.value);" type="button" class="btn btn-success" [disabled]="act.invalid">Ok</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="deviceId">Номер прибора:</label>
+
+        <div class="input-action">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" name="deviceId" id="deviceId" #deviceId="ngModel" [(ngModel)]="data.device_id" required class="form-control" >
+                    </td>
+                    <td>
+                        <button (click)="addDeviceId(deviceId.value);" type="button" class="btn btn-success" [disabled]="deviceId.invalid">Ok</button>
+                    </td>
+                </tr>
+                <tr *ngIf="data.last_coordinate !=='wait'">
+                    <td colspan="2">
+                        <span class="red" *ngIf="data.last_coordinate === 'null'">Не на связи</span>
+                        <span [ngStyle]="{fontWeight:600}" *ngIf="data.last_coordinate !=='null'">Посл. координаты в: <span [ngStyle]="{color:coordinate_color}">{{data.last_coordinate | date:'hh:mm dd-MM-yy'}}</span></span>
+                    </td>
+                </tr>
+                <tr *ngIf="data.sanction == 0">
+                    <td colspan="2">
+                        <span [ngStyle]="{fontWeight:600}" class="date_sanction" >Применены санкции в: {{data.date_sanction}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td>
+                <button *ngIf="data.status == 0" type="button" class="btn btn-primary" (click)="show($event);">{{buttonTitle[ data.type - 1].title}}</button>
+            </td>
+            <td>
+                <button type="button" *ngIf="data.sanction == 1" class="btn btn-danger" (click)="changeSanction($event,0);">Оставить</button>
+                <button type="button" *ngIf="data.sanction == 0" class="btn btn-success" (click)="changeSanction($event,1);">Отпустить</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning" (click)="getLastCoordinate()">Обновить</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+<div id="back">
+    <button class="btn" (click)="back()">Назад</button>
+</div>

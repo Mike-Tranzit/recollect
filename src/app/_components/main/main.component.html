@@ -1,11 +1,31 @@
 <h2 [style.color]="'red'" [ngClass]="{error: true}" *ngIf="errorMessage">{{errorMessage}}</h2>
-<div class="row" *ngIf="!data.length && !countStartData">
+<div class="row" *ngIf="!data.length && !countStartData && !errorMessage">
     <div class="col-centered">
         <img src="assets/images/loader.gif" alt="Идет загрузка..." >
     </div>
 </div>
 
+<app-modal #modal>
+    <div class="app-modal-header">
 
+    </div>
+    <div class="app-modal-body">
+        <h3><strong>Добавить задачу в Trello?</strong></h3>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addTaskToTrello(1)">С переходом</button>
+        <button type="button" class="btn btn-success" (click)="addTaskToTrello(2)">Без перехода</button>
+        <button type="button" class="btn btn-default" (click)="modal.hide()">Отмена</button>
+    </div>
+</app-modal>
+
+<app-balance #balance>
+
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-default" (click)="balance.hide()">Закрыть</button>
+    </div>
+
+</app-balance>
 
 <div class="table-responsive" *ngIf="data.length">
     <h2 class="title">На терминале</h2>
@@ -13,35 +33,52 @@
         <thead class="thead-inverse">
         <tr>
             <th>Статус</th>
-            <th>$$$</th>
-            <th>Номер</th>
-            <th>Телефон</th>
-            <th>Добавлен</th>
-            <th>№</th>
+            <th class="price">$$$</th>
+            <th class="plate">Номер</th>
+            <th class="phone">Телефон</th>
+            <th class="add_date">Добавлен</th>
+            <th class="device">№</th>
             <th>Комментарии</th>
             <th>Осн. комментарии</th>
-            <th>Комментарий</th>
-            <th></th>
+            <th class="comments">Комментарий</th>
+            <th ></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let item of data" [ngClass]="{'table-from-nat':item.status == '2','table-to':item.status == '3'}">
             <td [ngClass]="{status: true}">{{item.status | i18nPlural:statusTitle}}</td>
-            <td>{{item.balance}}</td>
-            <td>{{item.plate}} <a href="#" (click)="trelloConfirm(item);"><img src="assets/images/trello.png" width="16px" alt="Занести в Trello"></a></td>
+            <td><a href="#" (click)="getBalance($event,item);">{{item.balance}}</a></td>
+            <td [ngClass]="{'active-copy': highlightedDiv === item.plate}">
+              {{item.plate}}
+                <br>
+            <a href="#" (click)="show($event,item);" *ngIf="item.trello === 0" class="trello_link">
+                <img src="assets/images/trello.png" width="16px" alt="Занести в Trello">
+            </a>
+
+            <img src="assets/images/green-icon.png" class="trello_ok" *ngIf="item.trello === 1" alt="Новая запись!">
+            <a href="#" (click)="copy($event, item.plate,', '+ item.phone)"><img src="assets/images/edit.png" class="copy"  alt="Скопировать"></a>
+            <img src="assets/images/new_red.png" class="new" *ngIf="item.new_record === 1" alt="Новая запись!">
+
+                <a  target="_blank" href="http://192.168.2.4/glonassCRM1/cpanel/trucks/list/?v={{item.plate}}"><img src="assets/images/crm.png" class="copy"  alt="CRM"></a>
+
+            </td>
             <td>{{item.phone}}</td>
             <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM-yyyy'}}</td>
             <td [ngClass]="{coordinateSuccess : item.relation == 1}">{{item.deviceId}}</td>
             <td [ngClass]="{comment: true}">{{item.comment}}</td>
             <td [ngClass]="{comment: true}">{{item.main_comment}}</td>
-            <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" >&nbsp;<button (click)="addComment(item,comment.value)" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>
-            <td class="delete"><button type="button" class="btn btn-primary" (click)="delete(item)">Удалить</button></td>
+            <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" >&nbsp;<button (click)="addComment(item,comment.value);" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>
+            <td class="delete">
+                <div class="centered">
+                    <button type="button" class="btn btn-primary" (click)="delete($event,item,data)">X</button>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<div class="row" *ngIf="!timeslotsData.length && countStartData">
+<div class="row" *ngIf="!timeslotsData.length && (countStartData || errorMessage)">
     <div class="col-centered">
         <img src="assets/images/loader.gif" alt="Идет загрузка..." >
     </div>
@@ -52,20 +89,23 @@
     <table class="table table-hover table-bordered">
         <thead class="thead-inverse">
         <tr>
-            <th>Номер</th>
-            <th>Телефон</th>
+            <th class="plate">Номер</th>
+            <th class="phone">Телефон</th>
             <th>Окно</th>
-            <th>Добавлен</th>
-            <th>№</th>
+            <th class="add_date">Добавлен</th>
+            <th class="device">№</th>
             <th>Комментарии</th>
             <th>Осн. комментарии</th>
-            <th>Комментарий</th>
+            <th class="comments">Комментарий</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let item of timeslotsData">
-            <td>{{item.plate}}</td>
+            <td [ngClass]="{'active-copy': highlightedDiv === item.plate}">{{item.plate}}<br>
+                <a href="#" (click)="copy($event, item.plate,', '+ item.phone)"><img src="assets/images/edit.png" class="copy" alt="Скопировать"></a>
+                <a  target="_blank" href="http://192.168.2.4/glonassCRM1/cpanel/trucks/list/?v={{item.plate}}"><img src="assets/images/crm.png" class="copy"  alt="CRM"></a>
+            </td>
             <td>{{item.phone}}</td>
             <td [ngClass]="{date: true}">{{item.date_window | date:'dd-MM-yyyy HH:mm'}}</td>
             <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM-yyyy'}}</td>
@@ -73,7 +113,10 @@
             <td [ngClass]="{comment: true}">{{item.comment}}</td>
             <td [ngClass]="{comment: true}">{{item.main_comment}}</td>
             <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" >&nbsp;<button (click)="addComment(item,comment.value)" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>
-            <td class="delete"><button type="button" class="btn btn-primary" (click)="delete(item)">Удалить</button></td>
+            <td class="delete">
+                <div class="centered"><button type="button" class="btn btn-primary" (click)="delete($event,item,timeslotsData)">X</button>
+            </div>
+            </td>
         </tr>
         </tbody>
     </table>

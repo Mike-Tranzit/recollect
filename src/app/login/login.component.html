@@ -1,0 +1,9 @@
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" [formGroup]='loginForm' novalidate (ngSubmit)="login()">
+      <input type="text" placeholder="Телефон" value="" tabindex="1" maxlength="13" name="login" formControlName="login"/>
+      <input type="text" placeholder="Пароль" value="" tabindex="2" name="password" formControlName="password"/>
+      <button type="submit">Войти</button>
+    </form>
+  </div>
+</div>

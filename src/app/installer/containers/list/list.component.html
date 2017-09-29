@@ -1,0 +1,12 @@
+<app-menu></app-menu>
+<app-loader [active]="active"></app-loader>
+<div class="list-group" [hidden]="active">
+    <a *ngFor="let item of list" href="#" (click)="info($event, item.id);" [ngClass]="{'sanction':item.sanction == 0}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{item.plate}}</h5>
+            <small>{{item.date_create | date:'hh:mm dd-MM'}}</small>
+        </div>
+        <p class="mb-1 date-sanction" *ngIf="item.sanction == 0">Санкции применены в {{item.date_sanction}}</p>
+        <small [ngStyle]="{color:types[item.type - 1].color}">{{types[item.type - 1].title}}</small>
+    </a>
+</div>

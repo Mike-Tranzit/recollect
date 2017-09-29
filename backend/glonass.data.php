@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 include 'db.php';
 
 mysqli_select_db($link,"glonass");
-$res = mysqli_query($link,"SELECT *,`reminder_glonass_porttranzit`.id as ids FROM `reminder_glonass_porttranzit` LEFT JOIN nztmodule3.objects on status_m in (1,2,3) and del=0 and nztmodule3.objects.num_auto = reminder_glonass_porttranzit.num_auto where pid is not null order by nztmodule3.objects.status_m ASC");
+$res = mysqli_query($link,"SELECT *,`reminder_glonass_porttranzit`.id as ids FROM `reminder_glonass_porttranzit` LEFT JOIN nztmodule3.objects on status_m =1 and del=0 and nztmodule3.objects.num_auto = reminder_glonass_porttranzit.num_auto where pid is not null order by nztmodule3.objects.status_m");
 
 $data = array();
 while ($info = mysqli_fetch_array($res)){
@@ -31,11 +31,14 @@ while ($info = mysqli_fetch_array($res)){
         'plate'=>$info["num_auto"],
         'balance'=>$rr,
         'relation'=>$relation,
-        'phone'=>$info["tel"]." ",
+        'phone'=>"+7".$info["tel"]."",
         'deviceId'=>$inf["device_id"],
         'date_create'=>$info["dates"],
+        'new_record'=>2,
+        'trello'=>0,
         'comment'=>iconv("windows-1251","UTF-8",$comment),
         'main_comment'=>iconv("windows-1251","UTF-8",$info['description'])
     ));
 }
+mysqli_close($link);
 echo json_encode($data);

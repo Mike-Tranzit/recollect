@@ -1,0 +1,34 @@
+<div (click)="onContainerClicked($event)" class="modal fade" tabindex="-1" [ngClass]="{'in': visibleAnimate}"
+     [ngStyle]="{'display': visible ? 'block' : 'none', 'opacity': visibleAnimate ? 1 : 0}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div id="payments">
+      <table class="table" *ngIf="payments.length">
+          <thead>
+          <tr>
+            <th class="data">Дата</th>
+            <th>Установка</th>
+            <th>Абонплата</th>
+            <th>Друг</th>
+            <th>Коммент</th>
+          </tr>
+          </thead>
+        <tbody>
+        <tr *ngFor="let item of payments">
+          <td>{{item.date | date:'dd-MM-yyyy HH:mm'}}</td>
+          <td>{{item.amount_installation}}</td>
+          <td>{{item.amount_fee_license}}</td>
+          <td>{{item.zreport | i18nPlural:terminal}}</td>
+          <td>{{item.comment}}</td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+      <p *ngIf="payments.length" id="balance_license_fee">Остаток по а/п: <span [style.color]="payments[0].balance_license_fee >= 0?'green':'red'">{{payments[0].balance_license_fee}}</span> руб.</p>
+      <div class="modal-footer">
+        <ng-content select=".app-modal-footer"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

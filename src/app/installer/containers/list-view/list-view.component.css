@@ -1,0 +1,38 @@
+#content{
+    width: 90%;
+    margin: auto;
+}
+.input-action table{
+    width: 100%;
+}
+.green{
+    color: green;
+}
+.plate{
+    font-weight: 600;
+}
+#back {
+    width: 120px;
+    right:50%;
+    margin-right:-60px;
+    position: fixed;
+    bottom: 10px;
+}
+#back button {
+    width: 100%;
+}
+
+#copy img{
+    width: 30px;
+    margin-top: -5px;
+}
+.status {
+    color: blue;
+}
+.greenCopy{
+    color: green;
+    font-weight: 600;
+}
+.red {
+    color: red;
+}

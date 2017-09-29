@@ -1,0 +1,100 @@
+.comment {
+    width: 14%;
+}
+#exit {
+    float: right;
+    margin-bottom: -25px;
+    margin-top: 15px;
+    margin-right: 5px;
+}
+input.form-control {
+    width: 70%;
+    float: left;
+}
+.error {
+    text-align: center;
+}
+.sanction {
+    background-color: #B9EBF9;
+}
+.new {
+    position: relative;
+    right: 0px;
+    width: 28px;
+}
+.buttons_action {
+    width: 30px !important;
+}
+.copy {
+    right: 0px;
+    width: 18px;
+}
+.trello_link:hover {
+    text-decoration: none;
+}
+.active-copy {
+    background-color: #CDAEDC;
+}
+.price,.device {
+    width:50px;
+}
+.trello_ok {
+    position: relative;
+    right: 0px;
+    width: 19px;
+}
+.plate,.add_date {
+    width: 100px;
+}
+.phone {
+    width: 100px;
+}
+.table-from-nat{
+    background-color: #E4E4E4;
+}
+.table-to {
+    background-color: #DCC5C5;
+}
+
+input.ng-touched.ng-invalid {border:solid red 1px;}
+input.ng-touched.ng-valid {border:solid green 1px !important;}
+.coordinateSuccess {
+    background-color: #B7F2B4 !important;
+    font-weight: 600;
+}
+button:hover{
+    cursor: pointer;
+}
+.status {
+    width:7%;
+}
+.delete {
+    width: 10px;
+}
+.centered{
+    text-align:center;
+}
+.comments{
+    width: 120px;
+}
+.date_coordinate{
+    color: red;
+    font-size: 12px;
+}
+.date_sanction {
+    font-size: 10px;
+}
+.date{
+    width: 10%;
+}
+button.form-control {
+    width: 10%;
+    float: right;
+}
+.title {
+    text-align: center;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}

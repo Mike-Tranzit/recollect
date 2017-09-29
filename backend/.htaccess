@@ -1,0 +1,14 @@
+DirectoryIndex index.php
+RewriteEngine on
+
+# Make the backend accessible via url: http://site/backend.
+RewriteRule ^cpanel cpanel.php
+
+# If a directory or a file exists, use it directly.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Otherwise forward it to index.php.
+RewriteRule . index.php
+
+php_value display_errors 1

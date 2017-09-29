@@ -1,0 +1,26 @@
+.modal {
+    background: rgba(0,0,0,0.6);
+}
+.modal-dialog {
+    margin-top: 100px !important;
+
+}
+.data {
+    width:150px;
+}
+.modal-content {
+    width: 600px !important;
+
+}
+#payments{
+    max-height: 300px !important;
+    overflow: auto !important;
+}
+#balance_license_fee {
+    text-align: center;
+    margin-bottom: 0px;
+    font-weight: 600;
+}
+.table{
+
+}

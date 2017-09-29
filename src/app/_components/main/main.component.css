@@ -2,17 +2,46 @@
     width: 14%;
 }
 input.form-control {
-    width: 65%;
+    width: 70%;
     float: left;
 }
 .error {
     text-align: center;
 }
+.new {
+    position: relative;
+    right: 0px;
+    width: 28px;
+}
+.copy {
+    right: 0px;
+    width: 18px;
+}
+.trello_link:hover {
+    text-decoration: none;
+}
+.active-copy {
+    background-color: #CDAEDC;
+}
+.price,.device {
+    width:50px;
+}
+.trello_ok {
+    position: relative;
+    right: 0px;
+    width: 19px;
+}
+.plate,.add_date {
+    width: 100px;
+}
+.phone {
+    width: 100px;
+}
 .table-from-nat{
     background-color: #E4E4E4;
 }
 .table-to {
-    background-color: #BFECFF;
+    background-color: #DCC5C5;
 }
 
 input.ng-touched.ng-invalid {border:solid red 1px;}
@@ -28,7 +57,13 @@ button:hover{
     width:7%;
 }
 .delete {
-    width: 5%;
+    width: 10px;
+}
+.centered{
+    text-align:center;
+}
+.comments{
+    width: 220px;
 }
 .date{
     width: 10%;
