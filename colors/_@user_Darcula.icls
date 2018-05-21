@@ -4,7 +4,7 @@
     <property name="created">2017-07-27T14:11:52</property>
     <property name="ide">PhpStorm</property>
     <property name="ideVersion">2017.1.0.0</property>
-    <property name="modified">2018-05-21T09:37:24</property>
+    <property name="modified">2018-05-21T15:25:42</property>
     <property name="originalScheme">Darcula</property>
   </metaInfo>
   <option name="EDITOR_FONT_SIZE" value="14" />
@@ -12,6 +12,7 @@
   <option name="CONSOLE_FONT_SIZE" value="12" />
   <option name="EDITOR_FONT_NAME" value="Monospaced" />
   <colors>
+    <option name="CONSOLE_BACKGROUND_KEY" value="212121" />
     <option name="READONLY_BACKGROUND" value="100e21" />
   </colors>
   <attributes>
