@@ -4,11 +4,23 @@
     <property name="created">2017-07-27T14:11:52</property>
     <property name="ide">PhpStorm</property>
     <property name="ideVersion">2017.1.0.0</property>
-    <property name="modified">2018-05-19T19:26:25</property>
+    <property name="modified">2018-05-21T09:37:24</property>
     <property name="originalScheme">Darcula</property>
   </metaInfo>
   <option name="EDITOR_FONT_SIZE" value="14" />
   <option name="CONSOLE_FONT_NAME" value="Monospaced" />
   <option name="CONSOLE_FONT_SIZE" value="12" />
   <option name="EDITOR_FONT_NAME" value="Monospaced" />
+  <colors>
+    <option name="READONLY_BACKGROUND" value="100e21" />
+  </colors>
+  <attributes>
+    <option name="TEXT">
+      <value>
+        <option name="FOREGROUND" value="a9b7c6" />
+        <option name="BACKGROUND" value="212121" />
+        <option name="EFFECT_TYPE" value="5" />
+      </value>
+    </option>
+  </attributes>
 </scheme>
