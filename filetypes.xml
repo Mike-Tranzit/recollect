@@ -10,6 +10,7 @@
       <mapping pattern="api_route" type="PLAIN_TEXT" />
       <mapping pattern="шаблоны" type="PLAIN_TEXT" />
       <mapping pattern="координаты шаблонов на карту" type="PLAIN_TEXT" />
+      <mapping ext="env" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
