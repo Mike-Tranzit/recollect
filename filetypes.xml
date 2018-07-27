@@ -2,15 +2,14 @@
   <component name="FileTypeManager" version="17">
     <extensionMap>
       <mapping pattern="package" type="JSON" />
-      <mapping pattern="111" type="PLAIN_TEXT" />
-      <mapping pattern="readme" type="PLAIN_TEXT" />
-      <mapping pattern="менеджеры" type="PLAIN_TEXT" />
       <mapping pattern="место погрузки" type="PLAIN_TEXT" />
-      <mapping pattern="грузоотправитель грезополучатель" type="PLAIN_TEXT" />
-      <mapping pattern="api_route" type="PLAIN_TEXT" />
-      <mapping pattern="шаблоны" type="PLAIN_TEXT" />
+      <mapping pattern="менеджеры" type="PLAIN_TEXT" />
       <mapping pattern="координаты шаблонов на карту" type="PLAIN_TEXT" />
-      <mapping ext="env" type="PLAIN_TEXT" />
+      <mapping pattern="111" type="PLAIN_TEXT" />
+      <mapping pattern="api_route" type="PLAIN_TEXT" />
+      <mapping pattern="readme" type="PLAIN_TEXT" />
+      <mapping pattern="грузоотправитель грезополучатель" type="PLAIN_TEXT" />
+      <mapping pattern="шаблоны" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
