@@ -2,12 +2,12 @@
   <component name="MaterialThemeConfig">
     <option name="version" value="2.8.2" />
     <option name="selectedTheme" value="DEEPOCEAN" />
-    <option name="isContrastMode" value="true" />
+    <option name="isMaterialDesign" value="false" />
     <option name="accentColor" value="FFEB3B" />
     <option name="useMaterialIcons" value="false" />
-    <option name="compactSidebar" value="true" />
     <option name="tabsHeight" value="50" />
     <option name="darkTitleBar" value="true" />
+    <option name="arrowsStyle" value="Plus-Minus" />
     <option name="userId" value="4e38d7e1:1655ce09247:-8000" />
     <option name="isHighContrast" value="true" />
     <option name="isWizardShown" value="true" />
