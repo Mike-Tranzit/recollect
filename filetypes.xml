@@ -10,6 +10,7 @@
       <mapping pattern="грузоотправитель грезополучатель" type="PLAIN_TEXT" />
       <mapping pattern="api_route" type="PLAIN_TEXT" />
       <mapping pattern="readme" type="PLAIN_TEXT" />
+      <mapping pattern="DockerfileBiulded" type="PLAIN_TEXT" />
       <mapping pattern="шаблоны" type="PLAIN_TEXT" />
       <mapping ext="dockerfile" type="PLAIN_TEXT" />
     </extensionMap>
