@@ -1,0 +1,7 @@
+<templateSet group="PHP">
+  <template name="class comment" value="/**&#10; * This is the model class for table &quot;limits&quot;.&#10; *&#10; * @property string $id&#10; * @property integer $receiver&#10; * @property mixed $array&#10; */" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+</templateSet>
