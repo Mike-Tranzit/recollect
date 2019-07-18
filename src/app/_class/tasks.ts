@@ -12,4 +12,9 @@ export class Tasks {
     act: string;
     device_id: string;
     phone?: string;
+    userGet?: number;
+    sim?: string;
+    dispatcher_comment?: string;
+    installer_comment?: string;
+    tarifts?: {id: number, name: string, amount: number}
 }

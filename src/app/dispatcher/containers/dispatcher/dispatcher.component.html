@@ -1,5 +1,9 @@
-<button *ngIf="countStartData" type="button" class="btn btn-primary" id="exit" (click)="exit()" >Выход</button>
-<h2 [style.color]="'red'" [ngClass]="{error: true}" *ngIf="errorMessage">{{errorMessage}}</h2>
+
+
+<h3 [style.color]="'red'" [ngClass]="{error: true}" *ngIf="errorMessage">{{errorMessage}}
+  <span *ngIf="!data.length"><br><button type="button" (click)="add($event)" class="btn btn-primary">Добавить задачу</button></span>
+</h3>
+<h3 [style.color]="'green'" [ngClass]="{success: true}" *ngIf="successMessage">{{successMessage}}</h3>
 <div class="row" *ngIf="!data.length && !countStartData && !errorMessage">
   <div class="col-centered">
     <app-loader [active]="true"></app-loader>
@@ -10,9 +14,23 @@
   <div class="app-modal-header">
 
   </div>
-  <div class="app-modal-body">
-    <h3><strong>Добавить задачу в Trello?</strong></h3>
+  <div class="app-modal-body" *ngIf="!addWithoutId">
+    <h3><strong>Добавить задачу?</strong></h3>
+    <input type="text" name="comment_add" [(ngModel)]="addParams.comment" #comment_add="ngModel" class="form-control single_comment" placeholder="Комментарий">
   </div>
+
+  <div class="app-modal-body" *ngIf="addWithoutId" >
+    <table class="comment_table">
+      <tr>
+        <td> <input type="text" name="plate_add" [(ngModel)]="addParams.plate" #plate="ngModel" required class="form-control" placeholder="Номер авто"></td>
+        <td><input type="text" name="phone_add" [(ngModel)]="addParams.phone" #phone="ngModel" required class="form-control" placeholder="Телефон"></td>
+        <td>
+          <input type="text" name="comment_add" [(ngModel)]="addParams.comment" #comment_add="ngModel" class="form-control" placeholder="Комментарий">
+        </td>
+      </tr>
+    </table>
+  </div>
+
   <div class="app-modal-footer">
     <button type="button" class="btn btn-primary" (click)="addTaskToTrello(1)">С переходом</button>
     <button type="button" class="btn btn-success" (click)="addTaskToTrello(2)">Без перехода</button>
@@ -36,6 +54,7 @@
     <tr>
       <th class="price">$$$</th>
       <th class="plate">Номер</th>
+
       <th class="phone">Телефон</th>
       <th class="add_date">Добавлен</th>
       <th class="device">№</th>
@@ -43,7 +62,14 @@
       <th>Комментарии</th>
       <th>Осн. комментарии</th>
       <th class="comments">Комментарий</th>
-      <th class="buttons_action"></th>
+      <th class="buttons_action">
+
+        <div id="buttons">
+          <button type="button" (click)="add($event)" class="btn btn-primary"> + </button>
+          <button type="button" [routerLink]="['/login']" class="btn btn-danger"> > </button>
+        </div>
+
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -60,15 +86,31 @@
         <img src="assets/images/green-icon.png" class="trello_ok" *ngIf="item.trello === 1" alt="Новая запись!">
         <a href="#" (click)="copy($event, item.plate,', '+ item.phone)"><img src="assets/images/edit.png" class="copy"  alt="Скопировать"></a>
         <img src="assets/images/new_red.png" class="new" *ngIf="item.new_record === 1" alt="Новая запись!">
-
-        <a  target="_blank" href="http://192.168.2.4/glonassCRM1/cpanel/trucks/list/?v={{item.plate}}"><img src="assets/images/crm.png" class="copy"  alt="CRM"></a>
+        <a  target="_blank" href="http://192.168.2.4/glonassCRM1/cpanel/trucks/list/?v={{item.plate}}"><img src="assets/images/crm.png" class="copy"  alt="CRM"></a><br>
+        <span class="status_params" [ngStyle]="{color:status_params[item.status].color}">{{status_params[item.status].title}}
+        <span *ngIf="item.status === 2 && item.user_take > 0">
+         <br> в {{item.date_take | date:'HH:mm'}} ({{item.user_name}})
+        </span>
+        </span>
+        <span *ngIf="item.installer_comment!==''">
+          <br>
+          {{item.installer_comment}} <span *ngIf="item.user_take > 0">({{item.user_name}})</span>
+        </span>
       </td>
+
       <td>{{item.phone}}</td>
-      <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM-yyyy'}}</td>
-      <td>{{item.deviceId}}<br><span *ngIf="item.date_last_coordinate!='null'" class="date_coordinate">{{item.date_last_coordinate | date:'hh:mm dd-MM-yyyy'}}</span></td>
+      <td [ngClass]="{date: true}">{{item.date_create | date:'HH:mm dd-MM-yy'}}</td>
+      <td>{{item.deviceId}}<br><span *ngIf="item.date_last_coordinate!='null'" class="date_coordinate">{{item.date_last_coordinate | date:'HH:mm dd-MM'}}</span></td>
       <td [ngClass]="{comment: true}">{{item.comment}}</td>
       <td [ngClass]="{comment: true}">{{item.main_comment}}</td>
-      <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" >&nbsp;<button (click)="addComment(item,comment.value);" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>
+      <td>
+        <table class="comment_table">
+          <tr>
+            <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" ></td>
+            <td><button (click)="addComment(item,comment.value);" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>
+          </tr>
+        </table>
+       </td>
       <td class="delete">
         <div class="centered">
           <button type="button" *ngIf="item.sanction == 1" class="btn btn-danger" (click)="changeSanction($event,item,0);">Оставить</button>
@@ -80,11 +122,10 @@
   </table>
 </div>
 
-<div class="row" *ngIf="!timeslotsData.length && (countStartData || errorMessage)">
-  <div class="col-centered">
-    <app-loader [active]="true"></app-loader>
-  </div>
-</div>
+<h3 [style.color]="'red'" [ngClass]="{error: true}" *ngIf="show_timeslot == 1 && !timeslotsData.length">
+  <br>
+  На сегодня таймслотов нет <br>
+</h3>
 
 <div class="table-responsive" *ngIf="timeslotsData.length">
   <h2 class="title">Окна должников</h2>
@@ -109,9 +150,9 @@
         <a  target="_blank" href="http://192.168.2.4/glonassCRM1/cpanel/trucks/list/?v={{item.plate}}"><img src="assets/images/crm.png" class="copy"  alt="CRM"></a>
       </td>
       <td>{{item.phone}}</td>
-      <td [ngClass]="{date: true}">{{item.date_window | date:'dd-MM-yyyy HH:mm'}}</td>
-      <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM-yyyy'}}</td>
-      <td [ngClass]="{coordinateSuccess : item.relation == 1}">{{item.deviceId}}</td>
+      <td [ngClass]="{date: true}">{{item.date_window | date:'HH:mm dd-MM-yy'}}</td>
+      <td [ngClass]="{date: true}">{{item.date_create | date:'dd-MM'}}</td>
+      <td [ngClass]="{coordinateSuccess : item.relation == 1}">{{item.deviceId}}<span *ngIf="item.date_last_coordinate!='null'" class="date_coordinate"><br>{{item.date_last_coordinate | date:'HH:mm dd-MM-yy'}}</span></td>
       <td [ngClass]="{comment: true}">{{item.comment}}</td>
       <td [ngClass]="{comment: true}">{{item.main_comment}}</td>
       <td><input type="text" name="comment" #comment="ngModel" [(ngModel)]="comment.value" required class="form-control" >&nbsp;<button (click)="addComment(item,comment.value)" type="button" class="btn btn-success" [disabled]="comment.invalid">Ok</button></td>

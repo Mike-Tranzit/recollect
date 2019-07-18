@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  host: 'http://85.175.152.118:90/recollect/backend/'
+  host: 'http://192.168.2.106/recollect/backend/'
 };

@@ -12,11 +12,6 @@ export class AuthenticationService {
     this.host = environment.host;
   }
 
-  /*  formingHeader(data: Object): RequestOptions {
-        const headers = new Headers({ 'Content-Type': 'application/json' });
-        return new RequestOptions({ headers: headers, body: data });
-    }*/
-
   getHeaders(): Headers {
       return new Headers({'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'});
   }
@@ -27,7 +22,7 @@ export class AuthenticationService {
   return this.http.post(`${this.host}login/authentication`, body , { headers } )
         .map((response: Response) => {
             const user = response.json();
-            if(user.status === 401) throw new Error('Не верный логин или пароль');
+            if(user.status === 401) throw new Error('РќРµ РІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ');
             if(user.currUser && user.currUser.token) {
                 localStorage.setItem('currentUser', JSON.stringify(user.currUser));
                 return user.currUser;

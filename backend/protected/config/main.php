@@ -71,15 +71,23 @@ return array(
         'errorHandler'=>array(
             // use 'front/error' action to display errors
             'errorAction'=>'/site/error',
-        ),
-
-       /* 'db'=>array(
+         ),
+        /*'db'=>array(
+            'class' => 'system.db.CDBConnection',
+            'connectionString' => 'mysql:host=localhost;dbname=nztmodule3',
+            'emulatePrepare' => true,
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'cp1251',
+        ),*/
+        'db'=>array(
+            'class' => 'system.db.CDBConnection',
             'connectionString' => 'mysql:host=192.168.2.104;dbname=nztmodule3',
             'emulatePrepare' => true,
             'username' => 'all',
             'password' => '1111',
             'charset' => 'cp1251',
-        ),*/
+        ),
 
         'BNComplex'=>array(
             // 'class'=>'application.extensions.PHPPDO.CPdoDbConnection',
@@ -91,14 +99,13 @@ return array(
             'password' => 'BNComplex1',
             'charset' => 'utf8',
         ),
-        'db'=>array(
+    /*    'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=nztmodule3',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
             'charset' => 'cp1251',
-        ),
-
+        ),*/
     ),
 
     // application-level parameters that can be accessed

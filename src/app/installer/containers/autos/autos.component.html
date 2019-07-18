@@ -1,0 +1,16 @@
+<app-menu [title]='title'></app-menu>
+<app-loader [active]="active"></app-loader>
+<div class="list-group" [hidden]="active">
+  <input type="text" class="form-control" name="plate" [(ngModel)]="plate" value="">
+  <a *ngFor="let item of list | searchPlate: plate" [routerLink]="['/detail', item.window_id, item.glonass_id, item.type ]" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{item.plate}}</h5>
+      <small>{{item.window | date:'HH:mm dd-MM'}}</small>
+    </div>
+    <p class="mb-1 date-in-work">Приедет с {{item.window_from | date:'HH:mm'}} до {{item.window_to | date:'HH:mm'}} {{work[item.in_work].title}}</p>
+    <small [ngStyle]="{color:types[item.type - 1].color}">{{types[item.type - 1].title}}</small>
+  </a>
+</div>
+<div id="back">
+  <button class="btn" (click)="refreshList()">обновить</button>
+</div>

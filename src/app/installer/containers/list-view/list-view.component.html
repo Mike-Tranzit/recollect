@@ -6,6 +6,15 @@
     </div>
     <div class="app-modal-body">
         <h4><strong>Закрыть задачу?</strong></h4>
+
+        <div class="checkbox" *ngFor="let t of tarifs">
+            <label class="custom-control custom-checkbox">
+                <input type="checkbox" name="{{t.name}}" (click)="checked(t)" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">{{t.name}} {{t.amount}} руб.</span>
+            </label>
+        </div>
+
     </div>
     <div class="app-modal-footer">
         <button type="button" class="btn btn-success" (click)="onTouch()">Да</button>
@@ -13,8 +22,8 @@
     </div>
 </app-modal>
 
-
-<div id="content" *ngIf="data">
+<div class="wrapper">
+<div class="content" *ngIf="data">
     <br>
 <form>
     <h4 class="plate">{{data.plate}}</h4>
@@ -29,8 +38,9 @@
             </td>
         </tr>
     </table>
-    <h6 class="status" *ngIf="data.status == 1">Задача закрыта!</h6>
-
+    <h6 class="status" *ngIf="data.status == 2">Задача закрыта!</h6>
+    <h6 class="status" *ngIf="data.status == 1">Задача в работе!</h6>
+    <h6 *ngIf="data.dispatcher_comment !== ''">Комментарий: {{data.dispatcher_comment}}</h6>
     <div class="form-group">
         <label for="act">Номер акта:</label>
 
@@ -40,33 +50,67 @@
             <table>
                 <tr>
                     <td>
-                        <input name="act" type="text" #act="ngModel" [(ngModel)]="act.value" required class="form-control" id="act">
+                        <table>
+                            <tr>
+                                <td class="act_selector"><input type="number" required class="form-control" maxlength="2" name="act_day" #act_day="ngModel" [(ngModel)]="act_day.value" id="act"><span >/</span></td>
+                                <td class="act_selector"><input type="number" required class="form-control" maxlength="2"  #act_month="ngModel" [(ngModel)]="act_month.value" name="act_month"><span>/</span></td>
+                                <td  class="act_selector"><input type="number"  (ngModelChange)="act_year.value = $event" required class="form-control" #act_year="ngModel" [(ngModel)]="act_year.value || currentYear" name="act_year" id="act_year"><span>-</span></td>
+                                <td ><input type="number" required class="form-control second_act_section" #act_index="ngModel" [(ngModel)]="act_index.value" name="act_index" id="act_index"></td>
+                            </tr>
+                        </table>
+
                     </td>
                     <td>
-                        <button (click)="addAct(act.value);" type="button" class="btn btn-success" [disabled]="act.invalid">Ok</button>
+                        <button (click)="addAct(act_day.value, act_month.value, act_year.value, act_index.value);" type="button" class="btn btn-success" [disabled]="act_day.invalid || act_month.invalid || act_year.invalid || act_index.invalid">Ok</button>
                     </td>
                 </tr>
             </table>
 
         </div>
     </div>
+
     <div class="form-group">
-        <label for="deviceId">Номер прибора:</label>
+        <label for="installer_comment">Комментарий:</label>
 
         <div class="input-action">
             <table>
                 <tr>
                     <td>
-                        <input type="text" name="deviceId" id="deviceId" #deviceId="ngModel" [(ngModel)]="data.device_id" required class="form-control" >
+                      <input type="text" required class="form-control" name="installer_comment_add" #installer_comment_add="ngModel" [(ngModel)]="data.installer_comment" id="installer_comment">
                     </td>
                     <td>
-                        <button (click)="addDeviceId(deviceId.value);" type="button" class="btn btn-success" [disabled]="deviceId.invalid">Ok</button>
+                        <button (click)="addInstallerComment($event);" id="comment_button" type="button" class="btn btn-success" [disabled]="installer_comment_add.invalid">Ok</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="deviceId">Укажите номер прибора и sim:</label>
+        <div class="input-action">
+            <table>
+                <tr>
+                    <td>
+                        <input placeholder="№ прибора" type="text" name="deviceId" id="deviceId" #deviceId="ngModel" [(ngModel)]="data.device_id" required class="form-control" >
+                    </td>
+                    <td>
+                        <input placeholder="SIM" type="text" name="sim" id="sim" #sim="ngModel" [(ngModel)]="data.sim" required class="form-control">
+                    </td>
+                    <td>
+                        <button (click)="addDeviceId(deviceId.value, sim.value);" type="button" class="deviceId btn btn-success" [disabled]="deviceId.invalid">Ok</button>
                     </td>
                 </tr>
                 <tr *ngIf="data.last_coordinate !=='wait'">
                     <td colspan="2">
                         <span class="red" *ngIf="data.last_coordinate === 'null'">Не на связи</span>
-                        <span [ngStyle]="{fontWeight:600}" *ngIf="data.last_coordinate !=='null'">Посл. координаты в: <span [ngStyle]="{color:coordinate_color}">{{data.last_coordinate | date:'hh:mm dd-MM-yy'}}</span></span>
+                        <span [ngStyle]="{fontWeight:600}" *ngIf="data.last_coordinate !=='null'">Посл. координаты в: <span [ngStyle]="{color:coordinate_color}">{{data.last_coordinate | date:'HH:mm dd-MM'}}</span></span>
+                    </td>
+                </tr>
+                <tr *ngIf="data.last_coordinate === 'wait'">
+                    <td colspan="2">
+                        <img src="assets/images/coordinates.gif" alt="" height="20px">
                     </td>
                 </tr>
                 <tr *ngIf="data.sanction == 0">
@@ -77,22 +121,37 @@
             </table>
         </div>
     </div>
-    <table>
+
+    <table class="button_actions">
         <tr>
-            <td>
-                <button *ngIf="data.status == 0" type="button" class="btn btn-primary" (click)="show($event);">{{buttonTitle[ data.type - 1].title}}</button>
+            <td *ngIf="data.status === 1">
+                <button  type="button" class="btn btn-primary" (click)="show($event);">{{buttonTitle[ data.type - 1].title}}</button>
             </td>
             <td>
+                <div *ngIf="data.obj_id!==0">
                 <button type="button" *ngIf="data.sanction == 1" class="btn btn-danger" (click)="changeSanction($event,0);">Оставить</button>
                 <button type="button" *ngIf="data.sanction == 0" class="btn btn-success" (click)="changeSanction($event,1);">Отпустить</button>
+                </div>
             </td>
             <td>
-                <button type="button" class="btn btn-warning" (click)="getLastCoordinate()">Обновить</button>
+                <button type="button" class="btn btn-warning" (click)="getTaskById()">Обновить</button>
             </td>
         </tr>
     </table>
 </form>
+
+    <table class="button_actions footer">
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><button type="button" *ngIf="data.status === 0" class="btn btn-success" (click)="changeStatus($event,1);">Взять</button>
+                <button type="button" *ngIf="data.status === 1 && currentId == data.userGet" class="btn btn-danger" (click)="changeStatus($event,0);">Отказаться</button></td>
+            <td><button class="btn" routerLink="..">Назад</button></td>
+        </tr>
+    </table>
+
 </div>
-<div id="back">
-    <button class="btn" (click)="back()">Назад</button>
+
 </div>

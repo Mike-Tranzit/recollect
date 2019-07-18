@@ -1,12 +1,26 @@
-<app-menu></app-menu>
+<app-menu [title]='title'></app-menu>
 <app-loader [active]="active"></app-loader>
 <div class="list-group" [hidden]="active">
-    <a *ngFor="let item of list" href="#" (click)="info($event, item.id);" [ngClass]="{'sanction':item.sanction == 0}" class="list-group-item list-group-item-action flex-column align-items-start">
+    <a *ngFor="let item of list"
+       [routerLink]="currentId == item.user_take || item.status == 0 ? ['/list', item.id ]: ['/list', item.id ]"
+       [ngClass]="{'sanction':item.sanction == 0}"
+       class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{item.plate}}</h5>
-            <small>{{item.date_create | date:'hh:mm dd-MM'}}</small>
+            <small>{{item.date_create | date:'HH:mm dd-MM'}}</small>
         </div>
+
+        <p class="mb-1 date-in-work" *ngIf="item.status == 1 && item.user_take > 0">Взята в работу в {{item.date_take |
+            date:'HH:mm'}} ({{item.user_name}})</p>
+        <p class="mb-1 date-in-work" *ngIf="item.dispatcher_comment !== ''">Комментарий: {{item.dispatcher_comment}}</p>
+
         <p class="mb-1 date-sanction" *ngIf="item.sanction == 0">Санкции применены в {{item.date_sanction}}</p>
+        <p class="mb-1 date-sanction" *ngIf="item.stat > 0" [ngStyle]="{color:status[item.stat - 1].color}">
+            {{status[item.stat - 1].title}} <span
+                *ngIf="item.stat == 2">в {{item.date_create | date:'HH:mm dd-MM'}}</span></p>
         <small [ngStyle]="{color:types[item.type - 1].color}">{{types[item.type - 1].title}}</small>
     </a>
+</div>
+<div id="back">
+    <button class="btn" (click)="refreshList()">обновить</button>
 </div>

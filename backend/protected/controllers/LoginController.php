@@ -4,7 +4,14 @@ class LoginController extends Controller
 {
     public function actionAuthentication()
 	{
+     //   echo "23423";
+
+
+      //  Yii::$app->request->post();
+
+
         header('Access-Control-Allow-Origin: *');
+        // print_r($_POST);die();
         $post = json_decode($_POST['data']);
         $user = Users::getCurrentModel($post->login,$post->password);
         if(!$user) {

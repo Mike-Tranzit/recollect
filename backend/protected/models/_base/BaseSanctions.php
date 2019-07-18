@@ -18,11 +18,13 @@
  * @property integer $glonass
  * @property integer $user_id_add
  * @property integer $user_id_remove
+ * @property integer $glonass_id
+ * @property integer $provider_id
  *
  */
 abstract class BaseSanctions extends GxActiveRecord {
 
-	public static function model($className=__CLASS__){
+	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}
 
@@ -40,10 +42,10 @@ abstract class BaseSanctions extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('obj_id, status, glonass, user_id_add, user_id_remove', 'numerical', 'integerOnly'=>true),
+			array('obj_id, status, glonass, user_id_add, user_id_remove, glonass_id, provider_id', 'numerical', 'integerOnly'=>true),
 			array('date_create, date_out, comment', 'safe'),
-			array('obj_id, date_create, date_out, status, comment, glonass, user_id_add, user_id_remove', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, obj_id, date_create, date_out, status, comment, glonass, user_id_add, user_id_remove', 'safe', 'on'=>'search'),
+			array('obj_id, date_create, date_out, status, comment, glonass, user_id_add, user_id_remove, glonass_id, provider_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, obj_id, date_create, date_out, status, comment, glonass, user_id_add, user_id_remove, glonass_id, provider_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +70,8 @@ abstract class BaseSanctions extends GxActiveRecord {
 			'glonass' => Yii::t('app', 'Glonass'),
 			'user_id_add' => Yii::t('app', 'User Id Add'),
 			'user_id_remove' => Yii::t('app', 'User Id Remove'),
+			'glonass_id' => Yii::t('app', 'Glonass'),
+			'provider_id' => Yii::t('app', 'Provider'),
 		);
 	}
 
@@ -83,6 +87,8 @@ abstract class BaseSanctions extends GxActiveRecord {
 		$criteria->compare('glonass', $this->glonass);
 		$criteria->compare('user_id_add', $this->user_id_add);
 		$criteria->compare('user_id_remove', $this->user_id_remove);
+		$criteria->compare('glonass_id', $this->glonass_id);
+		$criteria->compare('provider_id', $this->provider_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

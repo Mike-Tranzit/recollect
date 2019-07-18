@@ -1,0 +1,56 @@
+<app-menu [title]='title'></app-menu>
+<div class="wrapper">
+  <div class="content" *ngIf="LinkdataArray.length">
+    <br>
+    <form>
+
+      <div class="form-group">
+
+        <div class="input-action">
+          <table>
+            <tr *ngFor="let link of LinkdataArray; let i = index;">
+              <td>
+                <div class="input-group">
+                  <span class="input-group-addon">{{i+1}}</span>
+                  <input type="text" class="form-control" name="link{{i}}" [(ngModel)]="link.deviceId">
+                  <button (click)="clearField(i);">x</button>
+                </div>
+                 <span *ngIf="link.last_coordinate !==''">
+
+                 <span class="green" *ngIf="link.last_coordinate === 'success_new'">Новый прибор добавлен</span>
+                 <span class="red" *ngIf="link.last_coordinate === 'fail_new'">Ошибка добавления прибора</span>
+
+                 <span class="red" *ngIf="link.last_coordinate === 'null'">Не на связи</span>
+                 <span class="red" *ngIf="link.last_coordinate === 'not_exist'">Не найден в БД</span>
+
+                 <span [ngStyle]="{fontWeight:600}" *ngIf="checkCoordinate(link.last_coordinate);">Посл. коорд в: <span [ngStyle]="{color:checkColor(link)}">{{link.last_coordinate | date:'HH:mm dd-MM'}}</span></span>
+
+                 <span *ngIf="link.plate !==''" class="plate"> - {{link.plate}}</span>
+
+                 </span>
+              </td>
+              <td>&nbsp;</td>
+            </tr>
+              <tr>
+                  <td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              </tr>
+            <tr>
+                <td colspan="2" style="text-align: center">
+                    <button *ngIf="!loader" class="btn btn-success" (click)="checkCoordinates()">Запросить</button>
+                    <div id="loader_center" *ngIf="loader">
+                        <img src="assets/images/coordinates.gif" alt="" height="40px">
+                    </div>
+                </td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+<div id="back">
+
+</div>

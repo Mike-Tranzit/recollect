@@ -8,7 +8,7 @@ declare var window: any;
 
 @Injectable()
 export class TrelloService {
-  private workList = '59832595fefd0ce419be71a3'; //59832595fefd0ce419be71a3 //584129b0a2f353cff49ec9d0
+  private workList = '584129b0a2f353cff49ec9d0'; //59832595fefd0ce419be71a3 //584129b0a2f353cff49ec9d0
   public trelloList = new Subject<any>();
   constructor() { }
 
@@ -32,24 +32,20 @@ export class TrelloService {
     });
   }
 
-  public checkAuth(): void { // if (!window.Trello.token())
+  public checkAuth(): void {
    this.authorize();
-   /*localStorage.setItem('testString', 'test');
-   const retrievedObject = localStorage.getItem('testString');*/
-   //console.log(window.Trello.token());
   }
 
-  public addTask(item: Glonass, param) {
+  public addTask(item: Glonass, comment: any, param: any) {
      const creationSuccess = function (data){
       console.log('Card created successfully.');
      };
-   //  const transition = param === 1 ? 'Переход' : '' ;
     let transition = '';
      switch (param) {
          case 1: { transition = 'Переход'; break; }
          case 3: { transition = 'Вывод на связь'; break; }
      }
-
+     if(comment) transition = transition + '. ' + comment;
      const newCard = {
      name: item.plate + ', ' + item.phone + ' ' + transition,
      desc: '',

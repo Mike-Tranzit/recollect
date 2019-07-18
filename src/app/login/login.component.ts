@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
       private alertService: AlertService
   ){
     this.loginForm = formBuilder.group({
-      'login': ['+79181111105', [Validators.required]],
-      'password': ['1111', [ Validators.required]]
+      'login': ['+7', [Validators.required]],
+      'password': ['', [ Validators.required]]
     });
   }
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(this.loginForm.value.login, this.loginForm.value.password)
           .subscribe(
               data => {
-                const redirectUrl = data.role === 1 ? '/dispatcher' : '/list' ;
+                const redirectUrl = data.role === 3 ? '/list' : '/dispatcher' ;
                 this.router.navigate([redirectUrl]);
               },
               error => {

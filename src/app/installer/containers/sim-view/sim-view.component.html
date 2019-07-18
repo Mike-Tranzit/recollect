@@ -1,0 +1,45 @@
+<app-loader [active]="active"></app-loader>
+
+<div class="wrapper">
+  <div class="content" *ngIf="data">
+    <br>
+    <form>
+      <h4 class="plate">{{data.plate}}</h4>
+      <div class="form-group">
+        <label for="act">Номер акта:</label>
+
+        <h5 *ngIf="data.act.length" id="act" class="green">{{data.act}}</h5>
+
+      </div>
+
+      <div class="form-group">
+        <div class="input-action">
+          <table>
+            <tr>
+
+              <td>
+                <input placeholder="SIM" type="text" name="sim" id="sim" #sim="ngModel" [(ngModel)]="data.sim" required class="form-control">
+              </td>
+              <td>
+                <button (click)="addSim(sim.value);" type="button" class="deviceId btn btn-success" [disabled]="sim.invalid">Ok</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <table class="button_actions">
+        <tr>
+          <td>
+            <button type="button" class="btn btn-warning" (click)="getTruckById()">Обновить</button>
+          </td>
+          <td>
+            <button class="btn" routerLink="..">Назад</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+  </div>
+
+</div>

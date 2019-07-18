@@ -9,8 +9,6 @@ class DataController extends Controller
         echo CJSON::encode(array('status'=>$status));
     }
 
-
-
     public function actionchangeSanction(){
         header('Access-Control-Allow-Origin: *');
         $post = json_decode($_POST['data']);
@@ -22,11 +20,14 @@ class DataController extends Controller
     public function actionaddTask(){
         header('Access-Control-Allow-Origin: *');
         $post = json_decode($_POST['data']);
-        $status_code = TasksForInstallers::addTask($post)?200:401;
-        echo CJSON::encode(array('status'=>$status_code));
+        $statusId = TasksForInstallers::addTask($post);
+        $status = ($statusId!=2)?401:200;
+        $status_array = array( 3 => '×òî-òî ïîøëî íå òàê, îáğàòèòåñü ê àäìèíèñòğàòîğó', 1=> 'Ìàøèíà íå íàéäåíà â ÃËÎÍÀÑÑ' , 2 => 'Çàäà÷à äîáàâëåíà óñïåøíî!');
+        echo CJSON::encode(array('status'=>$status,'message'=> $status_array[ $statusId ] ));
     }
 
     public function actiongetObjectsForDistechers(){
+
         header("Access-Control-Allow-Origin: *");
         $data = Objects::getObjectsForDistechers();
         $data_result = array();
@@ -39,6 +40,8 @@ class DataController extends Controller
                 $status_sanction = 1;
                 $date_sanction = 'false';
             }
+            $stat = ($info['stat']!= NULL)? $info['stat']+1: (int)$info['stat'];
+
             array_push($data_result, array(
                 'ids'=>$info['id'],
                 'plate'=>$info["num_auto"],
@@ -53,44 +56,22 @@ class DataController extends Controller
                 'sanction'=>$status_sanction,
                 'date_sanction'=>$date_sanction,
                 'comment'=>Objects::getComments($info["num_auto"]),
-                'main_comment'=>$info['description']
+                'main_comment'=>$info['description'],
+                'status'=>$stat,
+                'date_take'=>$info['date_take'],
+                'user_take'=>(int)$info['user_id_take'],
+                'user_name'=>$info['name'],
+                'installer_comment' => $info['installer_comment'],
+                'dispatcher_comment' => $info['dispatcher_comment']
             ));
         }
         echo CJSON::encode($data_result);
     }
 
-
-
-    public function actiongetObjectsForInstaller(){
-        header("Access-Control-Allow-Origin: *");
-        $data = TasksForInstallers::getTasks();
-        $data_result = array();
-        foreach($data as $info){
-            $sanction = Sanctions::getSanctionStatus($info['id']);
-
-            if($sanction){
-                $status_sanction = 0;
-                $date_sanction = MYDate::showComments($sanction->date_create);
-            }else{
-                $status_sanction = 1;
-                $date_sanction = 'false';
-            }
-            array_push($data_result, array(
-                "id" => $info['id'],
-                "plate" => $info['plate'],
-                "date_create" => $info['date_create'],
-                "status" => $info['status'],
-                "type" => $info['type'],
-                'glonass_id'=>(int)$info['glonass_id'],
-                "obj_id" => $info['obj_id'],
-                'sanction'=>$status_sanction,
-                'date_sanction'=>$date_sanction,
-                'last_coordinate'=>0,//BNComplex::getlastcoordinatebydeviceid($info['deviceId']),
-                'act'=> $info['act']?$info['act']:'',
-                'device_id' => $info['deviceId']
-            ));
-        }
-        echo CJSON::encode($data_result);
+    public function actiondeleteFromReminder(){
+        header('Access-Control-Allow-Origin: *');
+        $post = json_decode($_POST['data']);
+        $status = Objects::deleteFromReminder($post->id)?200:401;
+        echo CJSON::encode(array('status'=>$status));
     }
-
 }

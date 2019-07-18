@@ -78,6 +78,53 @@ class MYChtml extends  CHtml
         }
     }
 
+    public static function view_num($arg){
 
+        $arg=str_replace ('A','à',$arg);
+        $arg=str_replace ('B','â',$arg);
+        $arg=str_replace ('E','å',$arg);
+        $arg=str_replace ('K','ê',$arg);
+        $arg=str_replace ('M','ì',$arg);
+        $arg=str_replace ('H','í',$arg);
+        $arg=str_replace ('O','î',$arg);
+        $arg=str_replace ('P','ð',$arg);
+        $arg=str_replace ('C','ñ',$arg);
+        $arg=str_replace ('T','ò',$arg);
+        $arg=str_replace ('Y','ó',$arg);
+        $arg=str_replace ('X','õ',$arg);
+        return $arg;
+    }
 
+    public static function check_num($arg){
+
+        $arg=strtoupper($arg);
+        $arg=str_replace (' ','',$arg);
+        $arg=str_replace ('À','A',$arg);
+        $arg=str_replace ('Â','B',$arg);
+        $arg=str_replace ('Å','E',$arg);
+        $arg=str_replace ('Ê','K',$arg);
+        $arg=str_replace ('Ì','M',$arg);
+        $arg=str_replace ('Í','H',$arg);
+        $arg=str_replace ('Î','O',$arg);
+        $arg=str_replace ('Ð','P',$arg);
+        $arg=str_replace ('Ñ','C',$arg);
+        $arg=str_replace ('Ò','T',$arg);
+        $arg=str_replace ('Ó','Y',$arg);
+        $arg=str_replace ('Õ','X',$arg);
+
+        $arg=str_replace ('à','A',$arg);
+        $arg=str_replace ('â','B',$arg);
+        $arg=str_replace ('å','E',$arg);
+        $arg=str_replace ('ê','K',$arg);
+        $arg=str_replace ('ì','M',$arg);
+        $arg=str_replace ('í','H',$arg);
+        $arg=str_replace ('î','O',$arg);
+        $arg=str_replace ('ð','P',$arg);
+        $arg=str_replace ('ñ','C',$arg);
+        $arg=str_replace ('ò','T',$arg);
+        $arg=str_replace ('ó','Y',$arg);
+        $arg=str_replace ('õ','X',$arg);
+
+        return $arg;
+    }
 }

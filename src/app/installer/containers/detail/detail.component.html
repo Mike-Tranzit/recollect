@@ -1,0 +1,136 @@
+<app-loader [active]="active"></app-loader>
+<app-modal #modal>
+
+  <div class="app-modal-header" >
+  </div>
+
+  <div class="app-modal-body"  *ngIf="addNewTask">
+    <h4><strong>Создать задачу?</strong></h4>
+  </div>
+  <div class="app-modal-footer"  *ngIf="addNewTask">
+    <button type="button" class="btn btn-success" (click)="add()">Да</button>
+    <button type="button" class="btn btn-default" (click)="modal.hide()">Отмена</button>
+  </div>
+
+  <div class="app-modal-body" *ngIf="!addNewTask">
+    <h4><strong>Изменить время?</strong></h4>
+  </div>
+  <div class="app-modal-footer" *ngIf="!addNewTask">
+    <button type="button" class="btn btn-success" (click)="changeWindow()">Да</button>
+    <button type="button" class="btn btn-default" (click)="modal.hide()">Отмена</button>
+  </div>
+</app-modal>
+
+
+<div class="wrapper">
+  <div class="content" *ngIf="data">
+    <br>
+
+      <h4 class="plate">{{data.plate}}</h4>
+
+      <table class="input-action">
+        <tr>
+          <td>
+            <h5 [ngClass]="{greenCopy:phoneCopy}">+7 ({{data.phone | slice:0:3}}) {{data.phone | slice:3:5}}-{{data.phone | slice:5:7}}-{{ data.phone | slice:7:10}}</h5>
+          </td>
+          <td >
+            <a href="#" (click)="copy($event)" id="copy"><img src="assets/images/edit.png" class="copy"  alt="Скопировать"></a>
+          </td>
+        </tr>
+      </table>
+      <table class="input-action buttons">
+        <tr>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h5>Окно на {{data.window | date:'HH:mm dd-MM'}}</h5>
+          </td>
+          <td>
+            <h5>-{{data.start}} ч</h5>
+          </td>
+          <td>
+            <h5>+{{data.end}} ч</h5>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h5>С {{data.window_from | date:'HH:mm dd-MM'}}</h5>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="buttonWindow($event,1);" >-</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="buttonWindow($event,2);">+</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h5>До {{data.window_to | date:'HH:mm dd-MM'}}</h5>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="buttonWindow($event,3);" >-</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="buttonWindow($event,4);">+</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+          <td>
+            &nbsp;&nbsp;
+          </td>
+        </tr>
+      </table>
+
+    <table class="button_actions">
+      <tr>
+        <td>
+          <button *ngIf="data.task_id == 0" type="button" class="btn btn-primary" (click)="showTask($event);">Создать задачу и взять в работу</button>
+          <button *ngIf="data.task_id !== 0" type="button" class="btn btn-primary" [routerLink]="['/list',data.task_id]">Перейти к задаче</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<div id="back">
+  <button class="btn" [routerLink]="['/autos']">Назад</button>
+</div>

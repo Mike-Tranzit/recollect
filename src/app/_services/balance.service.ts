@@ -4,7 +4,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Rx';
 import {environment} from '../../environments/environment';
-import { Balance } from  '../_class/balance';
+import { Balance } from '../_class/balance';
 
 @Injectable()
 export class BalanceService {
@@ -14,14 +14,14 @@ export class BalanceService {
     this.host = environment.host;
   }
 
-  getBalance(plate, path = 'glonass.data.balance.php'): Promise<Balance[]> {
+  getBalance(plate): Promise<Balance[]> {
     const params: URLSearchParams = new URLSearchParams();
     params.set('plate', plate);
 
     const requestOptions = new RequestOptions();
     requestOptions.search = params;
 
-     return this.http.get(`${this.host}${path}`, requestOptions ).toPromise()
+     return this.http.get(`${this.host}balance/getPayments`, requestOptions ).toPromise()
           .then( (response: Response) => response.json() as Balance[]).catch(this.handleError);
   }
 

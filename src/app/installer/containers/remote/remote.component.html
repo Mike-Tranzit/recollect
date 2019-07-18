@@ -1,0 +1,40 @@
+<app-menu [title]='title'></app-menu>
+<div class="wrapper">
+    <div class="content">
+        <br>
+
+            <div class="form-group">
+                <label for="remoteData">Номер прибора или авто:</label>
+                <div class="input-action">
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="text" required class="form-control" (keyup.enter)="checPhoneInTrucks()" id="remoteData" name="remoteData" [(ngModel)]="remoteData">
+                            </td>
+                            <td>
+                                <button id="remote_button" (click)="checPhoneInTrucks();" type="button" class="btn btn-success">Ok</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        <div class="form-group" *ngIf="resultPhone.status === 200">
+            <label for="resultPhone">SMS будет отправленно на номер {{resultPhone.phone}}{{ resultPhone.plate }}</label>
+
+            <div class="input-action">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" name="resultPhone" id="resultPhone" required class="form-control" (keyup.enter)="sendCookieMessage()" [(ngModel)]="resultPhone.text">
+                        </td>
+                        <td>
+                            <button id="" (click)="sendCookieMessage();" type="button" class="btn btn-success">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

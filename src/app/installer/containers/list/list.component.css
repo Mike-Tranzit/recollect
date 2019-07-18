@@ -4,3 +4,17 @@
 .date-sanction {
     color: red;
 }
+#back {
+    width: 120px;
+    right:50%;
+    margin-right:-60px;
+    position: fixed;
+    bottom: 20px;
+}
+.date-in-work{
+    font-size: 17px !important;
+    font-weight: 600;
+}
+#back button {
+    width: 100%;
+}

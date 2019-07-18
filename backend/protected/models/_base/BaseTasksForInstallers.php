@@ -19,6 +19,10 @@
  * @property integer $user_id_complete
  * @property string $date_complete
  * @property integer $obj_id
+ * @property integer $user_id_take
+ * @property string $date_take
+ * @property string $dispatcher_comment
+ * @property string $installer_comment
  *
  */
 abstract class BaseTasksForInstallers extends GxActiveRecord {
@@ -27,9 +31,9 @@ abstract class BaseTasksForInstallers extends GxActiveRecord {
 		return parent::model($className);
 	}
 
-	public function tableName() {
-		return 'glonass_crm.tasks_for_installers';
-	}
+    public function tableName() {
+        return 'glonass_crm.tasks_for_installers';
+    }
 
 	public static function label($n = 1) {
 		return Yii::t('app', 'TasksForInstallers|TasksForInstallers', $n);
@@ -41,17 +45,16 @@ abstract class BaseTasksForInstallers extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('glonass_id, status, type, user_id_add, user_id_complete, obj_id', 'numerical', 'integerOnly'=>true),
+			array('glonass_id, status, type, user_id_add, user_id_complete, obj_id, user_id_take', 'numerical', 'integerOnly'=>true),
 			array('plate', 'length', 'max'=>10),
-			array('date_create, date_complete', 'safe'),
-			array('plate, date_create, glonass_id, status, type, user_id_add, user_id_complete, date_complete, obj_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, plate, date_create, glonass_id, status, type, user_id_add, user_id_complete, date_complete, obj_id', 'safe', 'on'=>'search'),
+			array('date_create, date_complete, date_take, dispatcher_comment, installer_comment', 'safe'),
+			array('plate, date_create, glonass_id, status, type, user_id_add, user_id_complete, date_complete, obj_id, user_id_take, date_take, dispatcher_comment, installer_comment', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, plate, date_create, glonass_id, status, type, user_id_add, user_id_complete, date_complete, obj_id, user_id_take, date_take, dispatcher_comment, installer_comment', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
-		return array(
-		    'Sanctions'=>array(self::HAS_MANY, 'Sanctions', array('obj_id'=>'obj_id'))
+		return array( 'Sanctions'=>array(self::HAS_ONE, 'Sanctions', array('glonass_id'=>'glonass_id'))
 		);
 	}
 
@@ -72,6 +75,10 @@ abstract class BaseTasksForInstallers extends GxActiveRecord {
 			'user_id_complete' => Yii::t('app', 'User Id Complete'),
 			'date_complete' => Yii::t('app', 'Date Complete'),
 			'obj_id' => Yii::t('app', 'Obj'),
+			'user_id_take' => Yii::t('app', 'User Id Take'),
+			'date_take' => Yii::t('app', 'Date Take'),
+			'dispatcher_comment' => Yii::t('app', 'Dispatcher Comment'),
+			'installer_comment' => Yii::t('app', 'Installer Comment'),
 		);
 	}
 
@@ -88,6 +95,10 @@ abstract class BaseTasksForInstallers extends GxActiveRecord {
 		$criteria->compare('user_id_complete', $this->user_id_complete);
 		$criteria->compare('date_complete', $this->date_complete, true);
 		$criteria->compare('obj_id', $this->obj_id);
+		$criteria->compare('user_id_take', $this->user_id_take);
+		$criteria->compare('date_take', $this->date_take, true);
+		$criteria->compare('dispatcher_comment', $this->dispatcher_comment, true);
+		$criteria->compare('installer_comment', $this->installer_comment, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

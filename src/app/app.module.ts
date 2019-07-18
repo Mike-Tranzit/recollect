@@ -1,20 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Routes, RouterModule } from '@angular/router';
-
 import { AlertService } from './_services/alert.service';
 import { AuthenticationService } from './_services/authentication.service';
 
 import { DispatcherModule } from './dispatcher/dispatcher.module';
 import { InstallerModule } from './installer/installer.module';
-
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './alert/alert.component';
 import { AppComponent } from './app.component';
 import { DateCoordinatePipe } from './_pipes/date-coordinate.pipe';
-import { CommonComponent } from './_components/common/common.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -27,8 +25,7 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     AlertComponent,
-    DateCoordinatePipe,
-    CommonComponent
+    DateCoordinatePipe
   ],
   imports: [
     BrowserModule,
@@ -37,12 +34,11 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true })
   ],
-  providers: [AuthenticationService, AlertService],
+  providers: [AuthenticationService, AlertService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
 }

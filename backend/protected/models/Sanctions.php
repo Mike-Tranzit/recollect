@@ -18,6 +18,7 @@ class Sanctions extends BaseSanctions
             $model->date_create = new CDbExpression("now()");
             $model->comment = 'Добавлен установщиком ГЛОНАСС. Проблема с устройством';
             $model->user_id_add = (int)$post->user;
+            $model->glonass_id = $post->glonass_id;
         }
         $model->status = (int)$post->status;
         if($model->status == 1){
@@ -26,6 +27,7 @@ class Sanctions extends BaseSanctions
         }
 
         $model->glonass = 1;
+
         $model->save(false);
         return $model;
     }

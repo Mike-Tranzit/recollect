@@ -11,7 +11,11 @@ input.form-control {
     width: 70%;
     float: left;
 }
-.error {
+
+.single_comment {
+    width: 100% !important;
+}
+.error,.success {
     text-align: center;
 }
 .sanction {
@@ -55,15 +59,29 @@ input.form-control {
 .table-to {
     background-color: #DCC5C5;
 }
-
+table.comment_table{
+    width: 100%;
+}
+table.comment_table tr td {
+    padding: 0;
+    border: none;
+}
+table.comment_table tr td input{
+    width: 100%;
+}
 input.ng-touched.ng-invalid {border:solid red 1px;}
 input.ng-touched.ng-valid {border:solid green 1px !important;}
+
 .coordinateSuccess {
     background-color: #B7F2B4 !important;
     font-weight: 600;
 }
 button:hover{
     cursor: pointer;
+}
+.status_params{
+    font-size: 14px;
+    font-weight: 600;
 }
 .status {
     width:7%;
@@ -87,6 +105,8 @@ button:hover{
 .date{
     width: 10%;
 }
+input.ng-touched.ng-invalid {border:solid red 1px;}
+input.ng-touched.ng-valid {border:solid green 1px;}
 button.form-control {
     width: 10%;
     float: right;
@@ -97,4 +117,11 @@ button.form-control {
 .col-centered{
     float: none;
     margin: 0 auto;
+}
+#phone_add, #plate_add {
+    width: 100%;
+}
+#buttons{
+    width: 100px;
+    margin: auto;
 }

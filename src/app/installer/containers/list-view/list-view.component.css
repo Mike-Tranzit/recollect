@@ -1,4 +1,4 @@
-#content{
+.content{
     width: 90%;
     margin: auto;
 }
@@ -11,14 +11,40 @@
 .plate{
     font-weight: 600;
 }
-#back {
-    width: 120px;
-    right:50%;
-    margin-right:-60px;
-    position: fixed;
-    bottom: 10px;
+.wrapper,.content, body, html {
+    min-height: 100%;
+    position:relative;
 }
-#back button {
+#sim{
+    width: 90%;
+}
+.second_act_section{
+    width: 90%;
+}
+#comment_button{
+    float: right;
+}
+.deviceId{
+    float: right;
+}
+.act_selector input{
+    width: 80%;
+    float: left;
+}
+.act_selector span{
+    font-size: 20px;
+    float: right;
+    margin-right: 2px;
+}
+.button_actions tr td{
+    width: 33%;
+}
+.button_actions{
+    width: 100%;
+    position:relative;
+    bottom: 5px;
+}
+.button_actions button {
     width: 100%;
 }
 

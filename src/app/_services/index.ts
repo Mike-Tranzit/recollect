@@ -6,3 +6,5 @@ export * from './alert.service';
 export * from './data.service';
 export * from './balance.service';
 export * from './trello.service';
+export * from './remote.service';
+export * from './autos.service';
